@@ -12,7 +12,7 @@ import android.widget.ImageView;
 public class SplashScreen extends AppCompatActivity {
 
     private ImageView imageView;
-    private static int splashTimeOut=5000;
+    private static int splashTimeOut=3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

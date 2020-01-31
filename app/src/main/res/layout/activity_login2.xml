@@ -25,13 +25,13 @@
         android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="216dp"
         android:backgroundTint="@color/design_default_color_background"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.351"
+        app:layout_constraintHorizontal_bias="0.189"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -40,55 +40,38 @@
         android:layout_width="272dp"
         android:layout_height="46dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="64dp"
         android:backgroundTint="@color/design_default_color_on_primary"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/login2"
         android:layout_width="215dp"
         android:layout_height="67dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#FFFFFF"
-        android:text="LOGIN"
+        android:text="SIGN UP"
         android:textColor="#2167F3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.392"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"/>
 
-    <Button
-        android:id="@+id/register"
-        android:layout_width="337dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="22dp"
-        android:backgroundTint="#E9FFF9F9"
-        android:text="NEW TO FB? SIGN UP"
-        android:textColor="#2167F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgot_password"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/forgot_password"
-        android:layout_width="241dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="40dp"
-        android:clickable="true"
-        android:text="Forgot Password?"
-        android:textColor="@color/design_default_color_on_primary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="328dp"
+        android:layout_height="37dp"
+        android:ems="10"
+        android:hint="Name"
+        android:backgroundTint="#FFFFFF"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="320dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

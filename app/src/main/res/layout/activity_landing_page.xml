@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LandingPage">
 
     <include
@@ -10,4 +11,46 @@
         layout="@layout/toolbar"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="2dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        app:boxCornerRadiusTopStart="5dp"
+        app:boxCornerRadiusTopEnd="5dp"
+        app:boxCornerRadiusBottomEnd="5dp"
+        app:boxCornerRadiusBottomStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewFeed"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:layout_editor_absoluteY="45dp">
+
+        <EditText
+            android:id="@+id/post_click"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Write Something Here"
+            android:inputType="text"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFeed"
+        android:layout_width="392dp"
+        android:layout_height="558dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="109dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

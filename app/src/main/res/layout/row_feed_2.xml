@@ -8,7 +8,7 @@
     android:paddingBottom="16dp" >
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imgView_postPic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -18,50 +18,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_status"
         app:srcCompat="@drawable/statuspic" />
 
     <ImageView
-        android:id="@+id/button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:text="LIKE"
+        android:id="@+id/like_btn"
+        android:layout_width="104dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="41dp"
         android:src="@drawable/like"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        android:text="LIKE"
+        app:layout_constraintEnd_toStartOf="@+id/dislike_btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_likes" />
 
     <ImageView
-        android:id="@+id/button2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="16dp"
-        android:text="DISLIKE"
+        android:id="@+id/dislike_btn"
+        android:layout_width="83dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="92dp"
         android:src="@drawable/dislike"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        android:text="DISLIKE"
+        app:layout_constraintEnd_toStartOf="@+id/comment_btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toEndOf="@+id/like_btn"
+        app:layout_constraintTop_toBottomOf="@+id/imgView_postPic" />
 
     <ImageView
-        android:id="@+id/button3"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/comment_btn"
+        android:layout_width="74dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="92dp"
+        android:src="@drawable/comment_btn"
         android:text="COMMENT"
-        android:src="@drawable/like"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toEndOf="@+id/dislike_btn"
+        app:layout_constraintTop_toBottomOf="@+id/imgView_postPic" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imgView_proPic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -71,24 +71,55 @@
         app:srcCompat="@drawable/profilepic1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="@+id/imgView_proPic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+        app:layout_constraintStart_toEndOf="@+id/imgView_proPic"
+        app:layout_constraintTop_toTopOf="@+id/imgView_proPic" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="This is status"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imgView_proPic" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="91dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_likes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_likes"
+        app:layout_constraintVertical_bias="0.28"
+        app:srcCompat="@drawable/like" />
+
+    <TextView
+        android:id="@+id/tv_likes"
+        android:layout_width="43dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imgView_postPic" />
+
+    <TextView
+        android:id="@+id/tv_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="672dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/tv_likes"
+        app:layout_constraintTop_toBottomOf="@+id/imgView_postPic" />
 </androidx.constraintlayout.widget.ConstraintLayout>
