@@ -12,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.frenzbook.DTO.BaseResponse;
 import com.example.frenzbook.DTO.FriendsDTO;
 import com.example.frenzbook.DTO.UserData;
 import com.example.frenzbook.DTO.UserResponse;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +28,7 @@ import retrofit2.Response;
 
 public class AboutFragment extends Fragment {
 
-    private UserResponse userResponse;
+    private UserData userData;
     private TextView name;
     private TextView emailAddress;
     private TextView gender;
@@ -42,29 +45,26 @@ public class AboutFragment extends Fragment {
         gender = view.findViewById(R.id.gender);
         mobile = view.findViewById(R.id.mobile);
 
-        Call<UserResponse> call = api.getUserInfo("1");
-        call.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+        Call<BaseResponse<UserData>> call = api.getUserInfo("1");
 
-                if(response.body()!=null)
-                {
-                    userResponse = response.body();
-                    UserData userData = userResponse.getData();
-                    name.setText(userData.getUserName());
-                    emailAddress.setText(userData.getEmail());
-                    gender.setText(userData.getGender());
-                    mobile.setText(String.valueOf( userData.getMobileNumber()));
-                }
-            }
+      call.enqueue(new Callback<BaseResponse<UserData>>() {
+          @Override
+          public void onResponse(Call<BaseResponse<UserData>> call, Response<BaseResponse<UserData>> response)
+          {
+              userData = response.body().getData();
+              name.setText(userData.getUserName());
+              emailAddress.setText(userData.getEmail());
+              gender.setText(userData.getGender());
+              mobile.setText(String.valueOf( userData.getMobileNumber()));
+          }
 
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+          @Override
+          public void onFailure(Call<BaseResponse<UserData>> call, Throwable t) {
 
-                Log.i("AALIA",t.getMessage());
+          }
+      });
 
-            }
-        });
+
         return view;
     }
 

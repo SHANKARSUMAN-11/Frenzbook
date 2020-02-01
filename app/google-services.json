@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "316127902231",
+    "firebase_url": "https://friendsbook-a6898.firebaseio.com",
+    "project_id": "friendsbook-a6898",
+    "storage_bucket": "friendsbook-a6898.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316127902231:android:aaeb2547d510153936ba52",
+        "android_client_info": {
+          "package_name": "com.example.frenzbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316127902231-djlprj9oqtj75gvpntfqhehbjvvsf77j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Bk2n261PS-JYTsvSPlIi-A8Ey1XNTGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316127902231-djlprj9oqtj75gvpntfqhehbjvvsf77j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

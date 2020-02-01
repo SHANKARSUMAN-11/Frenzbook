@@ -33,7 +33,7 @@ public class LandingPageDrawer extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-         setDrawer();
+        setDrawer();
     }
 
 
@@ -52,9 +52,18 @@ public class LandingPageDrawer extends AppCompatActivity {
                      FragmentManager fragmentManager1 = getSupportFragmentManager();
                      fragmentManager1.beginTransaction().replace(R.id.fragment,friendsFragment).commit();
                      break;
+                 case R.id.timeline:
+                     TimelineFragment timelineFragment = new TimelineFragment();
+                     FragmentManager fragmentManager2 = getSupportFragmentManager();
+                     fragmentManager2.beginTransaction().replace(R.id.fragment,timelineFragment).commit();
+                     break;
+                 case R.id.feed:
+
+
                  default:
                      throw new IllegalStateException("Unexpected value: " + item.getItemId());
              }
+             drawerLayout.closeDrawers();
              return true;
          }
      });

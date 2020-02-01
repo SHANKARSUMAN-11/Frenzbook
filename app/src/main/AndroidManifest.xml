@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.frenzbook">
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/fb_circle"
@@ -9,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        >
-        <activity android:name=".MyFriendsFragment"></activity>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ReactionActivity"></activity>
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".MyFriendsFragment" />
         <activity android:name=".LandingPageDrawer" />
         <activity android:name=".Registration" />
         <activity
@@ -23,8 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

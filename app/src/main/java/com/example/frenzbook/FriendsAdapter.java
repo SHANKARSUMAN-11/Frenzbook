@@ -36,10 +36,17 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FriendsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FriendsAdapter.ViewHolder holder, int position) {
 
-        holder.textView.setText(friendsDTOList.get(position).getUserName()+"\n"+friendsDTOList.get(position).getEmail());
+        holder.textView.setText(friendsDTOList.get(position).getUserName());
         Glide.with(holder.imageView.getContext()).load(friendsDTOList.get(position).getImageUrl()).into(holder.imageView);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                friendsInterface.onClick(friendsDTOList.get(holder.getAdapterPosition()).getUserId());
+            }
+        });
 
     }
 
@@ -62,6 +69,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     public interface FriendsInterface
     {
-        public void onClick(Response response);
+        public void onClick(String userId);
     }
 }

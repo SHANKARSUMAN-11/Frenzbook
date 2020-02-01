@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
@@ -48,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="This is status"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgView_proPic" />
 
@@ -70,7 +70,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="TextView"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -87,48 +86,48 @@
         app:layout_constraintTop_toBottomOf="@+id/imgView_postPic" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/like"
         android:layout_width="46dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/like"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/dislike"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/dislike"
         android:layout_width="51dp"
         android:layout_height="54dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/dislike"
-        app:layout_constraintEnd_toStartOf="@+id/imageView8"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/angry"
+        app:layout_constraintStart_toEndOf="@+id/like"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/angry"
         android:layout_width="47dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/angry_face"
-        app:layout_constraintEnd_toStartOf="@+id/imageView11"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/wow"
+        app:layout_constraintStart_toEndOf="@+id/dislike"
         app:layout_constraintTop_toBottomOf="@+id/tv_likes" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/wow"
         android:layout_width="60dp"
         android:layout_height="51dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/wow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/angry"
         app:layout_constraintTop_toBottomOf="@+id/tv_likes" />
 
     <ImageView
@@ -139,6 +138,6 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_comment_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/like" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,14 @@
 package com.example.frenzbook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.frenzbook.DTO.BaseResponse;
 import com.example.frenzbook.DTO.FriendsDTO;
 import com.example.frenzbook.DTO.FriendsResponse;
+import com.example.frenzbook.DTO.TimelineDTO;
 
 import java.util.List;
 
@@ -37,11 +41,10 @@ public class MyFriendsFragment extends Fragment implements FriendsAdapter.Friend
         recyclerView = view.findViewById(R.id.recycler);
 
         Api api = App.getRetrofit().create(Api.class);
-        Call<FriendsResponse> call = api.getFriends("1");
-        call.enqueue(new Callback<FriendsResponse>() {
+        Call<BaseResponse<List<FriendsDTO>>> call = api.getFriends("1");
+        call.enqueue(new Callback<BaseResponse<List<FriendsDTO>>>() {
             @Override
-            public void onResponse(Call<FriendsResponse> call, Response<FriendsResponse> response)
-            {
+            public void onResponse(Call<BaseResponse<List<FriendsDTO>>> call, Response<BaseResponse<List<FriendsDTO>>> response) {
                 if (response.body() != null)
                 {
                     friendsDTOList = response.body().getData();
@@ -54,18 +57,21 @@ public class MyFriendsFragment extends Fragment implements FriendsAdapter.Friend
             }
 
             @Override
-            public void onFailure(Call<FriendsResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<List<FriendsDTO>>> call, Throwable t) {
 
             }
         });
 
 
-
         return view;
     }
 
-    @Override
-    public void onClick(okhttp3.Response response) {
 
+    @Override
+    public void onClick(String userId) {
+
+        TimelineFragment timelineFragment = new TimelineFragment(userId);
+        FragmentManager fragmentManager2 = getActivity().getSupportFragmentManager();
+        fragmentManager2.beginTransaction().replace(R.id.fragment,timelineFragment).commit();
     }
 }
