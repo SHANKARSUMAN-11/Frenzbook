@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "29721924788",
+    "firebase_url": "https://fbapp-b42aa.firebaseio.com",
+    "project_id": "fbapp-b42aa",
+    "storage_bucket": "fbapp-b42aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29721924788:android:b471d60f7922cf211473e1",
+        "android_client_info": {
+          "package_name": "com.example.frenzbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29721924788-s1qo01v40htpo4bms52dabhe865phk2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frenzbook",
+            "certificate_hash": "9785ec03fbddefc420a9c80e2167b8a5a1f29091"
+          }
+        },
+        {
+          "client_id": "29721924788-cnumh26hj51p0e4ij2qfhb3pngnt03ti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frenzbook",
+            "certificate_hash": "edbcedd1872c817143a173c4a7307b409c018baf"
+          }
+        },
+        {
+          "client_id": "29721924788-6hshrc91vlg8sdt4dd8kekep1iq1pd3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frenzbook",
+            "certificate_hash": "e37fb4282beb0259beb816c5952153cf8df7cced"
+          }
+        },
+        {
+          "client_id": "29721924788-nf8ihvkbuj10jo4lt5lrddqdbjibdevc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrjjE1Z3q_jeUmD8octcAxWv71cujuEw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29721924788-nf8ihvkbuj10jo4lt5lrddqdbjibdevc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
