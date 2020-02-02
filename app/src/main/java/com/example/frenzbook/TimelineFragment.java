@@ -1,6 +1,8 @@
 package com.example.frenzbook;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.frenzbook.DTO.BaseResponse;
 import com.example.frenzbook.DTO.ReactionDTO;
 import com.example.frenzbook.DTO.ReactionShowResponse;
@@ -35,13 +40,25 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
    private List<TimelineDTO> contents;
    private TimelineAdapter timelineAdapter;
    private String userName;
+   private String friendName;
+   private String url;
+   private TextView FriendName;
+   private ImageView friendPic;
+   private SharedPreferences sharedPreferences;
 
-   public TimelineFragment(String userId){
-       userName = userId;
+    public TimelineFragment(String userId,String url,String userName){
+
+       this.userName = userId;
+       this.friendName=userName;
+       this.url=url;
     }
 
 
-    public TimelineFragment() {
+    public TimelineFragment()
+    {
+        sharedPreferences = getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+        userName = sharedPreferences.getString("user_id",null);
+
     }
 
     @Nullable
@@ -49,8 +66,12 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_my_friends,container,false);
         timeline = view.findViewById(R.id.recycler);
+
+        FriendName = view.findViewById(R.id.name);
+        friendPic = view.findViewById(R.id.profile);
+
         initAdapter();
-        Api api = App.getRetrofit().create(Api.class);
+        Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
         Call<BaseResponse<List<TimelineDTO>>> call = api.getUsersAllPosts(userName);
 
         call.enqueue(new Callback<BaseResponse<List<TimelineDTO>>>() {
@@ -58,6 +79,10 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
             public void onResponse(Call<BaseResponse<List<TimelineDTO>>> call, Response<BaseResponse<List<TimelineDTO>>> response) {
                 if(response.body()!=null)
                 {
+                    FriendName.setText(friendName);
+                    Glide.with(friendPic.getContext())
+                            .applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.ic_launcher_foreground))
+                            .load(url).into(friendPic);
                     contents.clear();
                     contents.addAll(response.body().getData());
                     timelineAdapter.notifyDataSetChanged();
@@ -91,37 +116,38 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
         reactionDTO.setPostId(timelineDTO.getPostId());
         reactionDTO.setActivity(type);
 
-        Api api = App.getRetrofit().create(Api.class);
-        Call<BaseResponse<String>> call = api.addReaction(reactionDTO);
-        call.enqueue(new Callback<BaseResponse<String>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response)
-            {
-                Toast.makeText(getContext(),"You liked the post!",Toast.LENGTH_SHORT).show();
-            }
+        if(type=="Comment")
+        {
+            final String postId = timelineDTO.getPostDTO().getPostId();
+            Intent intent = new Intent(getActivity(),CommentActivity.class);
+            intent.putExtra("postIdComment",postId);
+            startActivity(intent);
+        }
+        else if(type =="LikeCount")
+        {
+            final String postId = timelineDTO.getPostDTO().getPostId();
+            Intent intent = new Intent(getContext(),ReactionActivity.class);
+            intent.putExtra("postId",postId);
+            startActivity(intent);
+        }
+        else {
+            Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
+            Call<BaseResponse<String>> call = api.addReaction(reactionDTO);
+            call.enqueue(new Callback<BaseResponse<String>>() {
+                @Override
+                public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+                    if(response.isSuccessful()) {
+                        Toast.makeText(getContext(), "You liked the post!", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-            @Override
-            public void onFailure(Call<BaseResponse<String>> call, Throwable t)
-            {
-                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        final String postId = timelineDTO.getPostDTO().getPostId();
-        Call<BaseResponse<ReactionShowResponse>> call1 = api.showReactionsByUserId(postId);
-
-        call1.enqueue(new Callback<BaseResponse<ReactionShowResponse>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<ReactionShowResponse>> call, Response<BaseResponse<ReactionShowResponse>> response) {
-                Intent intent = new Intent(getActivity(),ReactionActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<ReactionShowResponse>> call, Throwable t) {
-                Log.e("aalia", t.getMessage() );
-            }
-        });
+        }
 
     }
 }

@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.frenzbook.DTO.AddComment;
 import com.example.frenzbook.DTO.BaseResponse;
-import com.example.frenzbook.DTO.Comment;
+import com.example.frenzbook.DTO.ChildCommentItem;
 
 import java.util.List;
 
@@ -23,71 +21,69 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CommentActivity extends AppCompatActivity implements CommentAdapter.CommentInterface {
+public class ChildCommentActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    CommentAdapter commentAdapter;
+    RecyclerView childCommentRecycler;
+    ChildCommentAdapter childCommentAdapter;
     private RecyclerView.LayoutManager linear;
-    List<Comment> comments;
+    List<ChildCommentItem> childCommentItemList;
+    String parentCommentId;
+    String postId;
     Button addComment;
     EditText addCommentContent;
-    String postIdComment;
-    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_recyler);
-        sharedPreferences = getSharedPreferences("user_details",MODE_PRIVATE);
-        final String userId = sharedPreferences.getString("user_id",null);
-        postIdComment =getIntent().getStringExtra("postIdComment");
+        parentCommentId = getIntent().getStringExtra("parentCommentId");
+        postId = getIntent().getStringExtra("postId");
         Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
-        Call<BaseResponse<List<Comment>>> call = api.getCommentByPostId(postIdComment);
-        call.enqueue(new Callback<BaseResponse<List<Comment>>>() {
+        Call<BaseResponse<List<ChildCommentItem>>> call1 = api.getCommentByParentId(parentCommentId);
+        call1.enqueue(new Callback<BaseResponse<List<ChildCommentItem>>>() {
             @Override
-            public void onResponse(Call<BaseResponse<List<Comment>>> call, Response<BaseResponse<List<Comment>>> response) {
-                recyclerView = findViewById(R.id.rv_comments);
-                linear = new LinearLayoutManager(CommentActivity.this);
-                comments=response.body().getData();
-                commentAdapter = new CommentAdapter(comments);
-                recyclerView.setLayoutManager(linear);
-                recyclerView.setAdapter(commentAdapter);
+            public void onResponse(Call<BaseResponse<List<ChildCommentItem>>> call, Response<BaseResponse<List<ChildCommentItem>>> response) {
+                childCommentRecycler= findViewById(R.id.rv_comments);
+                linear = new LinearLayoutManager(ChildCommentActivity.this);
+                childCommentItemList=response.body().getData();
+                childCommentAdapter = new ChildCommentAdapter(childCommentItemList);
+                childCommentRecycler.setLayoutManager(linear);
+                childCommentRecycler.setAdapter(childCommentAdapter);
 
             }
 
             @Override
-            public void onFailure(Call<BaseResponse<List<Comment>>> call, Throwable t) {
-                Log.i("Aalia", t.getMessage());
+            public void onFailure(Call<BaseResponse<List<ChildCommentItem>>> call, Throwable t) {
 
             }
         });
+
         addCommentContent=findViewById(R.id.editText);
         addComment = findViewById(R.id.addComment);
 
         addComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onAddCommentClick(postIdComment,userId);
+                onAddChildCommentClick(parentCommentId,"98",postId);
             }
         });
 
-
     }
 
-
-    public void onAddCommentClick(String postId, String userId) {
-
+    public void onAddChildCommentClick(String parentCommentId, String userId,String postId) {
         AddComment addComment=new AddComment();
         addComment.setPostId(postId);
         addComment.setUserId(userId);
+        addComment.setParentCommentId(parentCommentId);
         addComment.setText(String.valueOf(addCommentContent.getText()));
-        addComment.setParentCommentId("null");
+
         Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
         Call<BaseResponse<String>> call = api.addComment(addComment);
+
         call.enqueue(new Callback<BaseResponse<String>>() {
             @Override
             public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
-                Toast.makeText(CommentActivity.this, "You commented on the post!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChildCommentActivity.this, "You commented on the post!", Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(getIntent());
             }
@@ -97,14 +93,5 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
                 Log.i("Aalia", t.getMessage());
             }
         });
-    }
-
-    @Override
-    public void onParentCommentClick(String parentCommentId,String postId) {
-
-        Intent intent=new Intent(CommentActivity.this,ChildCommentActivity.class);
-        intent.putExtra("parentCommentId",parentCommentId);
-        intent.putExtra("postId",postId);
-        startActivity(intent);
     }
 }

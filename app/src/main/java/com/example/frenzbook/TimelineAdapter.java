@@ -41,7 +41,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
 
         holder.name.setText(contents.get(position).getUserName());
         holder.message.setText(contents.get(position).getUserName() + " " +contents.get(position).getMessage());
-        if(!(contents.get(position).getPostDTO().getContent().getText() == null))
+        if(!(contents.get(position).getPostDTO().getContent().getText()==null))
             holder.postContent.setText(String.valueOf(contents.get(position).getPostDTO().getContent().getText()));
         else{
             holder.postContent.setVisibility(View.GONE);
@@ -89,6 +89,14 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
             contentInterface.onClick(contents.get(holder.getAdapterPosition()),"Like");
             }
         });
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                contentInterface.onClick(contents.get(holder.getAdapterPosition()),"Comment");
+            }
+        });
+
 
     }
 
@@ -113,6 +121,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         ImageView dislike;
         ImageView wow;
         ImageView angry;
+        ImageView comment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -126,6 +135,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
             dislike = itemView.findViewById(R.id.Dislike1);
             wow = itemView.findViewById(R.id.Wow1);
             angry = itemView.findViewById(R.id.Angry1);
+            comment=itemView.findViewById(R.id.comment);
         }
     }
 }

@@ -8,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.frenzbook.DTO.FriendsDTO;
 import com.example.frenzbook.DTO.FriendsResponse;
+import com.example.frenzbook.DTO.SecondSignUpDTO;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     FriendsInterface friendsInterface;
     List<FriendsDTO>friendsDTOList;
+    List<SecondSignUpDTO> secondSignUpDTOS;
+
 
     public FriendsAdapter(FriendsInterface friendsInterface, List<FriendsDTO> friendsDTOList) {
         this.friendsInterface = friendsInterface;
@@ -44,7 +48,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                friendsInterface.onClick(friendsDTOList.get(holder.getAdapterPosition()).getUserId());
+                friendsInterface.onClick(friendsDTOList.get(holder.getAdapterPosition()).getUserId(),friendsDTOList.get(holder.getAdapterPosition()).getImageUrl(),friendsDTOList.get(holder.getAdapterPosition()).getUserName());
             }
         });
 
@@ -59,16 +63,18 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         TextView textView;
         ImageView imageView;
+        CardView card_friends;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.textView = itemView.findViewById(R.id.friends_textview);
             this.imageView = itemView.findViewById(R.id.friends_imageview);
+            this.card_friends= itemView.findViewById(R.id.card_friends);
         }
     }
 
     public interface FriendsInterface
     {
-        public void onClick(String userId);
+        public void onClick(String userId,String url,String userName);
     }
 }

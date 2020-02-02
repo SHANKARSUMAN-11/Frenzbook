@@ -10,13 +10,15 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_background"/>
+        android:src="@mipmap/fb_circle"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
+        android:fontFamily="@font/avenirbook"
         android:text="FriendsBook"
+        android:textSize="24dp"
         />
 
 </LinearLayout>

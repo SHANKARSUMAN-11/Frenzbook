@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,10 @@ import java.util.List;
 public class ReactionAdapter extends RecyclerView.Adapter<ReactionAdapter.ViewHolder> {
 
     private List<ReactionShowResponse> reactionList;
+    public ReactionAdapter(List<ReactionShowResponse> reactionList)
+    {
+        this.reactionList=reactionList;
+    }
     @NonNull
     @Override
     public ReactionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,7 +32,7 @@ public class ReactionAdapter extends RecyclerView.Adapter<ReactionAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ReactionAdapter.ViewHolder holder, int position) {
-        holder.text.setText(reactionList.get(position).getUserName());
+        holder.text.setText(reactionList.get(position).getUserName() +" " + reactionList.get(position).getActivity());
         Glide.with(holder.image.getContext()).load(reactionList.get(position).getImageUrl()).into(holder.image);
 
     }
