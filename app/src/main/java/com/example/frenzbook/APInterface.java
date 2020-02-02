@@ -16,4 +16,8 @@ Call<AccessTokenRegisterResponse>  postData(@Body credentials cred);
 Call<AccessTokenRegisterResponse> postConf(@Body secondcredentials sec);
 
 
+@POST("/post/addPost")
+    Call<BaseResponse<String>> pushPost(@Body PostDTO postDTO);
+
+
 }

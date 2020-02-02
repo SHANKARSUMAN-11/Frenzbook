@@ -36,7 +36,7 @@ public class Login2Activity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<AccessTokenRegisterResponse> call, Response<AccessTokenRegisterResponse> response) {
                                 Toast.makeText(Login2Activity.this,"Congrats!",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(Login2Activity.this,MainActivity.class));
+                                startActivity(new Intent(Login2Activity.this,LandingPage.class));
                             }
                             @Override
                             public void onFailure(Call<AccessTokenRegisterResponse> call, Throwable t) {

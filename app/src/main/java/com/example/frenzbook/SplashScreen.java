@@ -12,7 +12,7 @@ import android.widget.ImageView;
 public class SplashScreen extends AppCompatActivity {
 
     private ImageView imageView;
-    private static int splashTimeOut=3000;
+    private static int splashTimeOut=2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +22,12 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i=new Intent(SplashScreen.this, MainActivity.class);
+                Intent i=new Intent(SplashScreen.this, PostActivity.class);
                 startActivity(i);
                 finish();
             }
         },splashTimeOut);
-
-        Animation myAnim= AnimationUtils.loadAnimation(this,R.anim.splashanimation);
+        Animation myAnim = AnimationUtils.loadAnimation(this,R.anim.splashanimation);
         imageView.startAnimation(myAnim);
     }
 }
