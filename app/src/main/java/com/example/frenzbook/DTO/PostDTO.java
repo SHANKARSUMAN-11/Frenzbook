@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class PostDTO{
 
+	@SerializedName("likeCount")
+	private int likeCount;
+
 	@SerializedName("postId")
 	private String postId;
 
@@ -18,6 +21,14 @@ public class PostDTO{
 
 	@SerializedName("timestamp")
 	private String timestamp;
+
+	public void setLikeCount(int likeCount){
+		this.likeCount = likeCount;
+	}
+
+	public int getLikeCount(){
+		return likeCount;
+	}
 
 	public void setPostId(String postId){
 		this.postId = postId;
@@ -63,7 +74,8 @@ public class PostDTO{
  	public String toString(){
 		return 
 			"PostDTO{" + 
-			"postId = '" + postId + '\'' + 
+			"likeCount = '" + likeCount + '\'' + 
+			",postId = '" + postId + '\'' + 
 			",category = '" + category + '\'' + 
 			",userId = '" + userId + '\'' + 
 			",content = '" + content + '\'' + 

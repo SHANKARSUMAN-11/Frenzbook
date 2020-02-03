@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +23,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.frenzbook.DTO.BaseResponse;
+import com.example.frenzbook.DTO.FriendRequestDTO;
+import com.example.frenzbook.DTO.MutualFriendsDTO;
 import com.example.frenzbook.DTO.ReactionDTO;
-import com.example.frenzbook.DTO.ReactionShowResponse;
 import com.example.frenzbook.DTO.TimelineDTO;
 
 import java.util.ArrayList;
@@ -39,16 +40,22 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
    private RecyclerView timeline;
    private List<TimelineDTO> contents;
    private TimelineAdapter timelineAdapter;
-   private String userName;
+   private String userId;
    private String friendName;
    private String url;
+   private String friendId;
    private TextView FriendName;
    private ImageView friendPic;
    private SharedPreferences sharedPreferences;
+   private Call<BaseResponse<List<TimelineDTO>>> call;
+   private Button addComment;
+   private Button addFriend;
+   private FriendRequestDTO friendRequestDTO;
+   private MutualFriendsDTO mutualFriendsDTO;
 
     public TimelineFragment(String userId,String url,String userName){
 
-       this.userName = userId;
+       this.friendId = userId;
        this.friendName=userName;
        this.url=url;
     }
@@ -56,8 +63,7 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
 
     public TimelineFragment()
     {
-        sharedPreferences = getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
-        userName = sharedPreferences.getString("user_id",null);
+
 
     }
 
@@ -70,9 +76,62 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
         FriendName = view.findViewById(R.id.name);
         friendPic = view.findViewById(R.id.profile);
 
+        sharedPreferences = getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("user_id",null);
+
+
+        addFriend = view.findViewById(R.id.addFriend);
+
         initAdapter();
-        Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
-        Call<BaseResponse<List<TimelineDTO>>> call = api.getUsersAllPosts(userName);
+
+
+        friendRequestDTO = new FriendRequestDTO();
+        friendRequestDTO.setUserId(userId);
+        friendRequestDTO.setFriendId(friendId);
+
+
+        if (friendId != null) {
+            Api api = App.getRetrofit(Api.USER_URL).create(Api.class);
+
+            Call<BaseResponse<MutualFriendsDTO>> call1 = api.getMutualFriends(friendRequestDTO);
+            call1.enqueue(new Callback<BaseResponse<MutualFriendsDTO>>() {
+                @Override
+                public void onResponse(Call<BaseResponse<MutualFriendsDTO>> call, Response<BaseResponse<MutualFriendsDTO>> response) {
+
+                    if (response.body() != null) {
+                        mutualFriendsDTO = response.body().getData();
+                        if (!mutualFriendsDTO.getFriend()) {
+                            addFriend.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse<MutualFriendsDTO>> call, Throwable t) {
+                    Log.i("Aalia", t.getMessage());
+                }
+            });
+
+            addFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAddFriendClick(friendRequestDTO);
+                }
+            });
+        }
+
+
+        Api api = App.getRetrofit(Api.POST_URL).create(Api.class);
+
+        if(friendId==null) {
+            call = api.getUsersAllPosts(userId);
+        }
+        else
+        {
+            call= api.getUsersAllPosts(friendId);
+        }
+
+
 
         call.enqueue(new Callback<BaseResponse<List<TimelineDTO>>>() {
             @Override
@@ -99,6 +158,31 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
 
 
         return view;
+    }
+
+    public void onAddFriendClick(FriendRequestDTO friendRequestDTO)
+    {
+        Api api = App.getRetrofit(Api.USER_URL).create(Api.class);
+        Call<BaseResponse<String>> call = api.sendFriendRequest(friendRequestDTO);
+
+        call.enqueue(new Callback<BaseResponse<String>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+                if(response.body()!=null)
+                {
+                    if(response.isSuccessful())
+                    {
+                        Toast.makeText(getContext(), "You sent the friend Request!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+                Toast.makeText(getContext(), "Failed to send friend Request!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void initAdapter() {
@@ -131,7 +215,7 @@ public class TimelineFragment extends Fragment implements TimelineAdapter.Conten
             startActivity(intent);
         }
         else {
-            Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
+            Api api = App.getRetrofit(Api.POST_URL).create(Api.class);
             Call<BaseResponse<String>> call = api.addReaction(reactionDTO);
             call.enqueue(new Callback<BaseResponse<String>>() {
                 @Override

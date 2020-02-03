@@ -38,6 +38,7 @@ public class AboutFragment extends Fragment {
     private TextView emailAddress;
     private TextView gender;
     private ImageView photo;
+    private TextView dob;
     private SharedPreferences sharedPreferences;
 
     @Nullable
@@ -45,12 +46,16 @@ public class AboutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_about,container,false);
 
-        Api api = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
+        Api api = App.getRetrofit(Api.USER_URL).create(Api.class);
         name= view.findViewById(R.id.name);
         emailAddress = view.findViewById(R.id.email);
         gender = view.findViewById(R.id.gender);
         photo=view.findViewById(R.id.photo);
+        dob = view.findViewById(R.id.dob);
         sharedPreferences= this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+
+
+
         String userId = sharedPreferences.getString("user_id",null);
         Call<BaseResponse<UserData>> call = api.getUserInfo(userId);
 
@@ -59,12 +64,14 @@ public class AboutFragment extends Fragment {
           public void onResponse(Call<BaseResponse<UserData>> call, Response<BaseResponse<UserData>> response)
           {
 
-if (response.body() != null)
-              userData = response.body().getData();
-              Glide.with(photo.getContext()).load(userData.getImageUrl()).into(photo);
-              name.setText(userData.getUserName());
-              emailAddress.setText(userData.getEmail());
-              gender.setText(userData.getGender());
+                if (response.body() != null) {
+                    userData = response.body().getData();
+                    Glide.with(photo.getContext()).load(userData.getImageUrl()).into(photo);
+                    name.setText(userData.getUserName());
+                    emailAddress.setText(userData.getEmail());
+                    gender.setText(userData.getGender());
+                    dob.setText(userData.getDob());
+                }
           }
 
           @Override

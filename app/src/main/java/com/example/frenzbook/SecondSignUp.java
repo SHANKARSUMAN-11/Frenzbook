@@ -179,7 +179,7 @@ public class SecondSignUp extends AppCompatActivity {
                     secondSignUpDTO.setUserId(getUserDetailsDTO.getId().toString());
                     secondSignUpDTO.setEmail(getUserDetailsDTO.getEmail());
                     secondSignUpDTO.setUserName(getUserDetailsDTO.getName());
-                    Api api1 = App.getRetrofit(Api.BASE_URL_PROXY).create(Api.class);
+                    Api api1 = App.getRetrofit(Api.USER_URL).create(Api.class);
                     Call<BaseResponse<SecondSignUpDTO>> responseCall = api1.editUserDetails(secondSignUpDTO,authToken);
                     responseCall.enqueue(new Callback<BaseResponse<SecondSignUpDTO>>() {
                         @Override

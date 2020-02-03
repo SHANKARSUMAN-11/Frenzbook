@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 public class SecondSignUpDTO implements Serializable {
+
     @SerializedName("userId")
     private String userId;
     private String userName;

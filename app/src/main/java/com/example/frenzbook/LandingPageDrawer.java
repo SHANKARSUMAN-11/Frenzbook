@@ -19,9 +19,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.frenzbook.DTO.SearchDTO;
 import com.example.frenzbook.DTO.SecondSignUpDTO;
 import com.google.android.material.navigation.NavigationView;
@@ -42,15 +47,16 @@ public class LandingPageDrawer extends AppCompatActivity implements SearchAdapte
     private SearchAdapter searchAdapter;
     private Api api;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page_drawer);
 
-        //  final NavigationView navigationView = findViewById(R.id.nav_view);
-
-
         searchAdapter = new SearchAdapter(this, this, secondSignUpDTOList);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,9 +72,7 @@ public class LandingPageDrawer extends AppCompatActivity implements SearchAdapte
         navigationView.setNavigationItemSelectedListener(this);
         menu.performIdentifierAction(R.id.my_friends, 3);
         sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
-
     }
-
 
 
     @Override
@@ -108,19 +112,7 @@ public class LandingPageDrawer extends AppCompatActivity implements SearchAdapte
                         Toast.makeText(LandingPageDrawer.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-//                call.enqueue(new Callback<List<SearchPOJO>>() {
-//                    @Override
-//                    public void onResponse(Call<List<SearchPOJO>> call, Response<List<SearchPOJO>> response) {
-//
-//                        recyclerView.setAdapter(new SearchAdapter(LandingActivity.this, searchPOJOS, LandingActivity.this));
-//                        searchAdapter.notifyDataSetChanged();
-//                    }
-//                    @Override
-//                    public void onFailure(Call<List<SearchPOJO>> call, Throwable t) {
-//                        // System.out.println("On Failure() called : " + t.getMessage());
-//
-//                    }
-//                });
+
                 return false;
             }
             @Override
@@ -144,7 +136,9 @@ public class LandingPageDrawer extends AppCompatActivity implements SearchAdapte
     @Override
     public void onSearchItemClick(String userId, String imageUrl, String userName)
     {
-
+        TimelineFragment timelineFragment = new TimelineFragment(userId,imageUrl,userName);
+        FragmentManager fragmentManager4 = getSupportFragmentManager();
+        fragmentManager4.beginTransaction().replace(R.id.fragment,timelineFragment).commit();
     }
 
     @Override
@@ -166,6 +160,9 @@ public class LandingPageDrawer extends AppCompatActivity implements SearchAdapte
                 fragmentManager2.beginTransaction().replace(R.id.fragment, timelineFragment).commit();
                 break;
             case R.id.feed:
+                FeedFragment feedFragment = new FeedFragment();
+                FragmentManager fragmentManager3 = getSupportFragmentManager();
+                fragmentManager3.beginTransaction().replace(R.id.fragment, feedFragment).commit();
                 break;
             case R.id.logout:
                 SharedPreferences.Editor editor = sharedPreferences.edit();

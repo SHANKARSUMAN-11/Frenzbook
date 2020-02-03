@@ -1,13 +1,18 @@
 package com.example.frenzbook;
 
+import com.example.frenzbook.DTO.Ad;
 import com.example.frenzbook.DTO.AddComment;
+import com.example.frenzbook.DTO.AddPostDTO;
 import com.example.frenzbook.DTO.BaseResponse;
 import com.example.frenzbook.DTO.ChildCommentItem;
 import com.example.frenzbook.DTO.Comment;
+import com.example.frenzbook.DTO.FeedResponse;
+import com.example.frenzbook.DTO.FriendRequestDTO;
 import com.example.frenzbook.DTO.FriendsDTO;
 import com.example.frenzbook.DTO.GetUserDetailsDTO;
 import com.example.frenzbook.DTO.LoginRequestDTO;
 import com.example.frenzbook.DTO.LoginResponseDTO;
+import com.example.frenzbook.DTO.MutualFriendsDTO;
 import com.example.frenzbook.DTO.ReactionDTO;
 import com.example.frenzbook.DTO.ReactionShowResponse;
 import com.example.frenzbook.DTO.SecondLoginRequestDTO;
@@ -28,8 +33,13 @@ import retrofit2.http.Path;
 
 public interface Api {
 
-    String BASE_URL_PROXY = "http://172.16.20.172:8080";
+    String USER_URL = "http://172.16.20.180:8082";
     String BASE_URL_LOGIN = "http://172.16.20.32:8080";
+    String BASE_URL_PROXY="http://172.16.20.172:8080";
+    String FEED_URL = "http://172.16.20.113:8084";
+    String ADS_URL = "http://172.16.20.181:8080";
+    String POST_URL = "http://172.16.20.82:8083";
+
 
     @GET("user/getUserDetails/{id}")
     Call<BaseResponse<UserData>> getUserInfo(@Path("id") String id);
@@ -55,13 +65,13 @@ public interface Api {
     @GET("comment/viewCommentByParentId/{parentCommentId}")
     public Call<BaseResponse<List<ChildCommentItem>>> getCommentByParentId(@Path("parentCommentId") String parentCommentId);
 
-    @POST("/auth/signin")
+    @POST("authentication/auth/signin")
     Call<LoginResponseDTO> sendLoginCredentials(@Body LoginRequestDTO loginRequestDTO);
 
-    @POST("/auth/signup")
+    @POST("authentication/auth/signup")
     Call<SignUpResponseDTO> sendSignUpCredentials(@Body SignUpRequestDTO signUpRequestDTO);
 
-    @POST("/jwt/getUserDetails")
+    @POST("authentication/jwt/getUserDetails")
     Call<GetUserDetailsDTO>getUserDetails(@Body SecondLoginRequestDTO secondLoginRequestDTO, @Header("authorization") String authToken);
 
     @POST("/user/editDetails")
@@ -69,5 +79,26 @@ public interface Api {
 
     @GET("/search/getAll/{search}")
     Call<List<SecondSignUpDTO>> getByName(@Path("search") String search);
+
+    @GET("feed/createFeed/{userId}")
+    Call<BaseResponse<List<FeedResponse>>> createFeed(@Path("userId")String userId);
+
+    @POST("user/getMutualFriends")
+    Call<BaseResponse<MutualFriendsDTO>> getMutualFriends(@Body FriendRequestDTO friendRequestDTO);
+
+    @POST("/user/sendFriendRequest")
+    Call<BaseResponse<String>> sendFriendRequest(@Body FriendRequestDTO friendRequestDTO);
+
+    @POST("post/addPost")
+    Call<BaseResponse<String>>addPost(@Body AddPostDTO addPostDTO);
+
+    @GET("/ads/getAds/{srcId}")
+    Call<List<Ad>> getAds(@Header("Authorization")String accessToken, @Path("srcId")Long srcId);
+
+//    @POST("/ads/onclick/{srcId}")
+//    Call<String> adOnClick(@Header("Authorization")String accessToken, @Path("srcId")Long srcId, @Body OnClickRequest onClickRequest);
+
+
+
 
 }

@@ -44,15 +44,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Glide.with(holder.profileImage.getContext()).load(comments.get(position).getImageUrl()).into(holder.profileImage);
         holder.comment.setText(comments.get(position).getText());
         final List<ChildCommentItem> childCommentItem = comments.get(position).getChildComment();
-        if(childCommentItem!=null)
-        {
-            holder.layout.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    commentInterface.onParentCommentClick(comments.get(position).getParentCommentId(),comments.get(position).getPostId());
+                    commentInterface.onParentCommentClick(comments.get(position).getParentCommentId(),comments.get(position).getPostId(),comments.get(position).getChildComment());
                 }
             });
-        }
+
+
 
     }
 
@@ -79,6 +78,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     public interface CommentInterface
     {
-        public void onParentCommentClick(String parentCommentId,String postId);
+        public void onParentCommentClick(String parentCommentId,String postId,List<ChildCommentItem> childCommentItems);
     }
 }

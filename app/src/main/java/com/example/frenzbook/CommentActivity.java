@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.frenzbook.DTO.AddComment;
 import com.example.frenzbook.DTO.BaseResponse;
+import com.example.frenzbook.DTO.ChildCommentItem;
 import com.example.frenzbook.DTO.Comment;
 
 import java.util.List;
@@ -100,11 +101,12 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
     }
 
     @Override
-    public void onParentCommentClick(String parentCommentId,String postId) {
+    public void onParentCommentClick(String parentCommentId, String postId, List<ChildCommentItem> childCommentItems) {
 
         Intent intent=new Intent(CommentActivity.this,ChildCommentActivity.class);
         intent.putExtra("parentCommentId",parentCommentId);
         intent.putExtra("postId",postId);
+        intent.putExtra("childComment", String.valueOf(childCommentItems));
         startActivity(intent);
     }
 }
